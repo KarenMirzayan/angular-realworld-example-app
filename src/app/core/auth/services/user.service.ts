@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, BehaviorSubject } from "rxjs";
+import { Observable, BehaviorSubject, of } from "rxjs";
 
 import { JwtService } from "./jwt.service";
 import { map, distinctUntilChanged, tap, shareReplay } from "rxjs/operators";
@@ -26,9 +26,14 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<{ user: User }> {
-    return this.http
-      .post<{ user: User }>("/users/login", { user: credentials })
-      .pipe(tap(({ user }) => this.setAuth(user)));
+    return of({user: {
+      email: credentials.email,
+      token: "string",
+      username: "smth",
+      bio: "string",
+      image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75"
+
+    }}).pipe(tap(({ user }) => this.setAuth(user)));
   }
 
   register(credentials: {
@@ -36,9 +41,14 @@ export class UserService {
     email: string;
     password: string;
   }): Observable<{ user: User }> {
-    return this.http
-      .post<{ user: User }>("/users", { user: credentials })
-      .pipe(tap(({ user }) => this.setAuth(user)));
+    return of({user: {
+      email: credentials.email,
+      token: "string",
+      username: credentials.username,
+      bio: "string",
+      image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75"
+
+    }}).pipe(tap(({ user }) => this.setAuth(user)));
   }
 
   logout(): void {

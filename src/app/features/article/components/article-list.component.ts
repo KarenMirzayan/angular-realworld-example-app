@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   selector: "app-article-list",
   template: `
     @if (loading === LoadingState.LOADING) {
-      <div class="article-preview">Loading articles...</div>
+      <div class="article-preview">Loading articles...aaa</div>
     }
 
     @if (loading === LoadingState.LOADED) {
@@ -83,7 +83,6 @@ export class ArticleListComponent {
 
     this.articlesService
       .query(this.query)
-      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.loading = LoadingState.LOADED;
         this.results = data.articles;

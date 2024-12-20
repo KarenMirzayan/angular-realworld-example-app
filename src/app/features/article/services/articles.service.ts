@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { ArticleListConfig } from "../models/article-list-config.model";
 import { Article } from "../models/article.model";
@@ -20,13 +20,62 @@ export class ArticlesService {
       params = params.set(key, config.filters[key]);
     });
 
-    return this.http.get<{ articles: Article[]; articlesCount: number }>(
-      "/articles" + (config.type === "feed" ? "/feed" : ""),
-      { params },
-    );
+    return of({ articles: [
+      {
+        slug: "string",
+        title: "string",
+        description: "string",
+        body: "string",
+        tagList: ["string[]"],
+        createdAt: "string",
+        updatedAt: "string",
+        favorited: false,
+        favoritesCount: 1,
+        author: {
+          username: "string",
+          bio: "string",
+          image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75",
+          following: false
+        }
+      },
+      {
+        slug: "string",
+        title: "string",
+        description: "string",
+        body: "string",
+        tagList: ["string[]"],
+        createdAt: "string",
+        updatedAt: "string",
+        favorited: false,
+        favoritesCount: 1,
+        author: {
+          username: "string",
+          bio: "string",
+          image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75",
+          following: false
+        }
+      }
+    ] as Article[], articlesCount: 1})
   }
 
   get(slug: string): Observable<Article> {
+    return of({
+      slug: "string",
+      title: "string",
+      description: "string",
+      body: "string",
+      tagList: ["string[]"],
+      createdAt: "string",
+      updatedAt: "string",
+      favorited: false,
+      favoritesCount: 1,
+      author: {
+        username: "string",
+        bio: "string",
+        image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75",
+        following: false
+      }
+    })
     return this.http
       .get<{ article: Article }>(`/articles/${slug}`)
       .pipe(map((data) => data.article));

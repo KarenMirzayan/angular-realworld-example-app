@@ -14,7 +14,7 @@ import { ProfileService } from "../../services/profile.service";
 import { AsyncPipe, NgIf } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FollowButtonComponent } from "../../components/follow-button.component";
-
+import { MockUser } from "../../models/mockUser.model";
 @Component({
   selector: "app-profile-page",
   templateUrl: "./profile.component.html",
@@ -42,8 +42,10 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() { // You need to modify this for Task 3
-    this.profileService
-      .get(this.route.snapshot.params["username"])
+    const username = this.route.snapshot.params["username"]
+    if (username === "smth"){
+      this.profileService
+      .get(username)
       .pipe(
         // catchError((error) => {
         //   void this.router.navigate(["/"]);
@@ -58,6 +60,15 @@ export class ProfileComponent implements OnInit {
         this.profile = profile;
         this.isUser = profile.username === user?.username;
       });
+    }
+    else {
+      this.profile = {
+        username: "wrong",
+        bio: "string",
+        image: "https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75",
+        following: false
+      }
+    }
   }
 
   onToggleFollowing(profile: Profile) {
